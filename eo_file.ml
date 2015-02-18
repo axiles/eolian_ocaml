@@ -39,6 +39,16 @@ module Function = struct
     description_prop_get : string option;
     description_prop_set : string option;
     description_method : string option;
+    virtual_pure_unresolved : bool;
+    virtual_pure_property : bool;
+    virtual_pure_prop_get : bool;
+    virtual_pure_prop_set : bool;
+    virtual_pure_method : bool;
+    auto_unresolved : bool;
+    auto_property : bool;
+    auto_prop_get : bool;
+    auto_prop_set : bool;
+    auto_method : bool;
   }
 end
 

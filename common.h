@@ -20,5 +20,8 @@ print_var_string_opt(
         Eina_Stringshare *value,
         FILE* file);
 
+extern void
+print_vat_bool(Eina_Stringshare *var, Eina_Bool value, FILE* file);
+
 #endif
 

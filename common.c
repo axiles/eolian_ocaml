@@ -25,10 +25,7 @@ print_string_option(Eina_Stringshare *s, FILE *file)
 }
 
 void
-print_var_string(
-        Eina_Stringshare *var,
-        Eina_Stringshare *value,
-        FILE *file)
+print_var_string(Eina_Stringshare *var, Eina_Stringshare *value, FILE *file)
 {
         if(value == NULL) {
                 fprintf(stderr, "%s should not be NULL\n", var);
@@ -45,6 +42,15 @@ print_var_string_opt(
 {
         fprintf(file, "%s = ", var);
         print_string_option(value, file);
+        fprintf(file, ";\n");
+}
+
+void
+print_var_bool(Eina_Stringshare *var, Eina_Bool value, FILE* file)
+{
+        fprintf(file, "%s = ", var);
+        if(value) fprintf(file, "true");
+        else fprintf(file, "false");
         fprintf(file, ";\n");
 }
 
