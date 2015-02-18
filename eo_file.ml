@@ -49,6 +49,11 @@ module Function = struct
     auto_prop_get : bool;
     auto_prop_set : bool;
     auto_method : bool;
+    empty_unresolved : bool;
+    empty_property : bool;
+    empty_prop_get : bool;
+    empty_prop_set : bool;
+    empty_method : bool;
   }
 end
 

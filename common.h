@@ -21,7 +21,7 @@ print_var_string_opt(
         FILE* file);
 
 extern void
-print_vat_bool(Eina_Stringshare *var, Eina_Bool value, FILE* file);
+print_var_bool(Eina_Stringshare *var, Eina_Bool value, FILE* file);
 
 #endif
 

@@ -137,13 +137,34 @@ print_function_auto(
         print_var_bool(name, eolian_function_is_auto(f, ty), file);
 }
 
-static void print_function_auto_all(const Eolian_Function *f, FILE *file)
+static void
+print_function_auto_all(const Eolian_Function *f, FILE *file)
 {
         print_function_auto(f, "auto_unresolved", EOLIAN_UNRESOLVED, file);
         print_function_auto(f, "auto_property", EOLIAN_PROPERTY, file);
         print_function_auto(f, "auto_prop_get", EOLIAN_PROP_GET, file);
         print_function_auto(f, "auto_prop_set", EOLIAN_PROP_SET, file);
         print_function_auto(f, "auto_method", EOLIAN_METHOD, file);
+}
+
+static void
+print_function_empty(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE *file)
+{
+        print_var_bool(name, eolian_function_is_empty(f, ty), file);
+}
+
+static void
+print_function_empty_all(const Eolian_Function *f, FILE *file)
+{
+        print_function_empty(f, "empty_unresolved", EOLIAN_UNRESOLVED, file);
+        print_function_empty(f, "empty_property", EOLIAN_PROPERTY, file);
+        print_function_empty(f, "empty_prop_get", EOLIAN_PROP_GET, file);
+        print_function_empty(f, "empty_prop_set", EOLIAN_PROP_SET, file);
+        print_function_empty(f, "empty_method", EOLIAN_METHOD, file);
 }
 
 void
@@ -158,6 +179,7 @@ print_function(const Eolian_Function *f, FILE *file)
         print_function_description_all(f, file);
         print_function_virtual_pure_all(f, file);
         print_function_auto_all(f, file);
+        print_function_empty_all(f, file);
         fprintf(file, "}\n");
 }
 
