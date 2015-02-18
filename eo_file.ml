@@ -54,6 +54,14 @@ module Function = struct
     empty_prop_get : bool;
     empty_prop_set : bool;
     empty_method : bool;
+    legacy_only_unresolved : bool;
+    legacy_only_property : bool;
+    legacy_only_prop_get : bool;
+    legacy_only_prop_set : bool;
+    legacy_only_method : bool;
+    cl : bool;
+    c_only : bool;
+    constructor :bool;
   }
 end
 

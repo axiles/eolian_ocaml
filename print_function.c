@@ -167,8 +167,55 @@ print_function_empty_all(const Eolian_Function *f, FILE *file)
         print_function_empty(f, "empty_method", EOLIAN_METHOD, file);
 }
 
+static void
+print_function_legacy_only(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE                  *file)
+{
+        print_var_bool(name, eolian_function_is_legacy_only(f, ty), file);
+}
+
+static void
+print_function_legacy_only_all(const Eolian_Function *f, FILE *file)
+{
+        print_function_legacy_only(f, "legacy_only_unresolved",
+                EOLIAN_UNRESOLVED, file);
+        print_function_legacy_only(f, "legacy_only_property", EOLIAN_PROPERTY,
+                file);
+        print_function_legacy_only(f, "legacy_only_prop_get", EOLIAN_PROP_GET,
+                file);
+        print_function_legacy_only(f, "legacy_only_prop_set", EOLIAN_PROP_SET,
+                file);
+        print_function_legacy_only(f, "legacy_only_method", EOLIAN_METHOD,
+                file);
+}
+
+static void
+print_function_class(const Eolian_Function *f, FILE *file)
+{
+        print_var_bool("cl", eolian_function_is_class(f), file);
+}
+
+static void
+print_function_c_only(const Eolian_Function *f, FILE *file)
+{
+        print_var_bool("c_only", eolian_function_is_c_only(f), file);
+}
+
+static void
+print_function_constructor(
+        const Eolian_Function *f,
+        const Eolian_Class *cl,
+        FILE *file)
+{
+        print_var_bool("constructor", eolian_function_is_constructor(f, cl),
+                file);
+}
+
 void
-print_function(const Eolian_Function *f, FILE *file)
+print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
 {
         fprintf(file, "{\n");
         print_function_type(f, file);
@@ -180,6 +227,10 @@ print_function(const Eolian_Function *f, FILE *file)
         print_function_virtual_pure_all(f, file);
         print_function_auto_all(f, file);
         print_function_empty_all(f, file);
+        print_function_legacy_only_all(f, file);
+        print_function_class(f, file);
+        print_function_c_only(f, file);
+        print_function_constructor(f, cl, file);
         fprintf(file, "}\n");
 }
 
