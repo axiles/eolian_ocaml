@@ -30,9 +30,32 @@ module Object_scope = struct
     | Protected
 end
 
+module Type_type = struct
+   type t =
+    | Unknown_type
+    | Void
+    | Regular
+    | Regular_struct
+    | Regular_enum
+    | Complex
+    | Pointer
+    | Struct
+    | Struct_opaque
+    | Enum
+    | Alias
+    | Class
+end
+ 
+module Type = struct
+  type t = {
+    ty : Type_type.t;
+  }
+end
+
 module Function_parameter = struct
   type t = {
     direction : Parameter_dir.t;
+    ty : Type.t;
   }
 end
 
