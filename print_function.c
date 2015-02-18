@@ -56,6 +56,26 @@ print_function_full_c_name(const Eolian_Function *f, FILE *file)
         eina_stringshare_del(s);
 }
 
+static void
+print_function_legacy(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE                  *file)
+{
+        print_var_string_opt(name, eolian_function_legacy_get(f, ty), file);
+}
+
+static void
+print_function_legacy_all(const Eolian_Function *f, FILE *file)
+{
+        print_function_legacy(f, "legacy_unresolved", EOLIAN_UNRESOLVED, file);
+        print_function_legacy(f, "legacy_property", EOLIAN_PROPERTY, file);
+        print_function_legacy(f, "legacy_prop_get", EOLIAN_PROP_GET, file);
+        print_function_legacy(f, "legacy_prop_set", EOLIAN_PROP_SET, file);
+        print_function_legacy(f, "legacy_method", EOLIAN_PROP_GET, file);
+}
+
 void
 print_function(const Eolian_Function *f, FILE *file)
 {
@@ -64,6 +84,7 @@ print_function(const Eolian_Function *f, FILE *file)
         print_function_scope(f, file);
         print_function_name(f, file);
         print_function_full_c_name(f, file);
+        print_function_legacy_all(f, file);
         fprintf(file, "}\n");
 }
 

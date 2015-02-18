@@ -29,6 +29,11 @@ module Function = struct
     scope : Object_scope.t;
     name : string;
     full_c_name : string;
+    legacy_unresolved : string option;
+    legacy_property : string option;
+    legacy_prop_get : string option;
+    legacy_prop_set : string option;
+    legacy_method : string option;
   }
 end
 
