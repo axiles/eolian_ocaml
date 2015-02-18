@@ -7,6 +7,13 @@ module Function_type = struct
     | Method
 end
 
+module Parameter_dir = struct
+  type t =
+    | In_param
+    | Out_param
+    | Inout_param
+end
+
 module Class_type = struct
   type t =
     | Unknown_type
@@ -21,6 +28,12 @@ module Object_scope = struct
     | Public
     | Private
     | Protected
+end
+
+module Function_parameter = struct
+  type t = {
+    direction : Parameter_dir.t;
+  }
 end
 
 module Function = struct
@@ -62,6 +75,7 @@ module Function = struct
     cl : bool;
     c_only : bool;
     constructor :bool;
+    parameters : Function_parameter.t list;
   }
 end
 

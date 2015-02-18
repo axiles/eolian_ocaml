@@ -1,5 +1,8 @@
 #include "common.h"
 
+extern void
+print_param(const Eolian_Function_Parameter *param, FILE *file);
+
 static void
 print_ml_variant_Eolian_Function_Type(Eolian_Function_Type x, FILE *file)
 {
@@ -214,6 +217,20 @@ print_function_constructor(
                 file);
 }
 
+static void
+print_function_parameters(const Eolian_Function *f, FILE *file)
+{
+        Eina_Iterator *it;
+        Eolian_Function_Parameter *param;
+        it = eolian_function_parameters_get(f);
+        fprintf(file, "parameters = [\n");
+        EINA_ITERATOR_FOREACH(it, param) {
+                print_param(param, file);
+                fprintf(file, ";\n");
+        }
+        fprintf(file, "];\n");
+}
+
 void
 print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
 {
@@ -231,6 +248,7 @@ print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
         print_function_class(f, file);
         print_function_c_only(f, file);
         print_function_constructor(f, cl, file);
+        print_function_parameters(f, file);
         fprintf(file, "}\n");
 }
 
