@@ -1,4 +1,4 @@
-module Functon_type = struct
+module Function_type = struct
  type t =
     | Unresolved
     | Property
@@ -34,6 +34,11 @@ module Function = struct
     legacy_prop_get : string option;
     legacy_prop_set : string option;
     legacy_method : string option;
+    description_unresolved : string option;
+    description_property : string option;
+    description_prop_get : string option;
+    description_prop_set : string option;
+    description_method : string option;
   }
 end
 
@@ -48,6 +53,11 @@ module Class = struct
     eo_prefix : string;
     data_type : string option;
     inherits : string list;
+    functions_unresolved : Function.t list;
+    functions_property : Function.t list;
+    functions_prop_get : Function.t list;
+    functions_prop_set : Function.t list;
+    functions_method : Function.t list;
   }
 end
 

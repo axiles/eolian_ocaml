@@ -3,7 +3,7 @@
 void
 print_ml_variant_Eolian_Object_Scope(Eolian_Object_Scope x, FILE *file)
 {
-        fprintf(file, "Object_Scope.");
+        fprintf(file, "Object_scope.");
         switch(x) {
         case EOLIAN_SCOPE_PUBLIC:
                 fprintf(file, "Public");
