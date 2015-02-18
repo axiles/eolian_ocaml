@@ -16,9 +16,17 @@ module Class_type = struct
     | Interface
 end
 
+module Object_scope = struct
+  type t =
+    | Public
+    | Private
+    | Protected
+end
+
 module Function = struct
   type t = {
-    ty : Function_type.t
+    ty : Function_type.t;
+    scope : Object_scope.t;
   }
 end
 

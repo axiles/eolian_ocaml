@@ -6,6 +6,9 @@
 #include <Eolian.h>
 
 extern void
+print_ml_variant_Eolian_Object_Scope(Eolian_Object_Scope scope, FILE *file);
+
+extern void
 print_string_option(Eina_Stringshare *s, FILE *file);
 
 extern void

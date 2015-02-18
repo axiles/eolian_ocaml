@@ -1,6 +1,7 @@
 AC_INIT([eolian_ocaml], [0.1])
 
 AM_INIT_AUTOMAKE([foreign])
+AM_SILENT_RULES([yes])
 
 AC_PROG_CC
 

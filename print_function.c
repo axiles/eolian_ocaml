@@ -32,11 +32,20 @@ print_function_type(const Eolian_Function *f, FILE *file)
         fprintf(file, ";\n");
 }
 
+static void
+print_function_scope(const Eolian_Function *f, FILE *file)
+{
+        fprintf(file, "scope = ");
+        print_ml_variant_Eolian_Object_Scope(eolian_function_scope_get(f),
+                file);
+        fprintf(file, ";\n");
+}
 void
 print_function(const Eolian_Function *f, FILE *file)
 {
         fprintf(file, "{\n");
         print_function_type(f, file);
+        print_function_scope(f, file);
         fprintf(file, "}\n");
 }
 
