@@ -40,12 +40,30 @@ print_function_scope(const Eolian_Function *f, FILE *file)
                 file);
         fprintf(file, ";\n");
 }
+
+static void
+print_function_name(const Eolian_Function *f, FILE *file)
+{
+        print_var_string("name", eolian_function_name_get(f), file);
+}
+
+static void
+print_function_full_c_name(const Eolian_Function *f, FILE *file)
+{
+        Eina_Stringshare* s;
+        s = eolian_function_full_c_name_get(f);
+        print_var_string("full_c_name", s, file);
+        eina_stringshare_del(s);
+}
+
 void
 print_function(const Eolian_Function *f, FILE *file)
 {
         fprintf(file, "{\n");
         print_function_type(f, file);
         print_function_scope(f, file);
+        print_function_name(f, file);
+        print_function_full_c_name(f, file);
         fprintf(file, "}\n");
 }
 

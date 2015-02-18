@@ -27,6 +27,8 @@ module Function = struct
   type t = {
     ty : Function_type.t;
     scope : Object_scope.t;
+    name : string;
+    full_c_name : string;
   }
 end
 
