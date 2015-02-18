@@ -1,6 +1,8 @@
 #ifndef COMMON_H
 #define COMMON_H
 
+#define EFL_BETA_API_SUPPORT
+
 #include <Eolian.h>
 
 extern void
