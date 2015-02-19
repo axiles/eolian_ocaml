@@ -47,8 +47,10 @@ module Type_type = struct
 end
  
 module Struct_type_field = struct
-  type t = {
+  type 'a t = {
     name : string option;
+    description : string option;
+    ty : 'a;
   }
 end
 
@@ -56,7 +58,7 @@ module Type = struct
   type t = {
     ty : Type_type.t;
     subtypes : t list;
-    struct_fields : Struct_type_field.t list;
+    struct_fields : t Struct_type_field.t list;
   }
 end
 
