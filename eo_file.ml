@@ -143,6 +143,7 @@ module Function = struct
     c_only : bool;
     constructor :bool;
     parameters : Function_parameter.t list;
+    property_keys : string list;
   }
 end
 

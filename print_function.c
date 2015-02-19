@@ -231,6 +231,20 @@ print_function_parameters(const Eolian_Function *f, FILE *file)
         fprintf(file, "];\n");
 }
 
+static void
+print_property_keys(const Eolian_Function *f, FILE *file)
+{
+        Eina_Iterator *it;
+        Eina_Stringshare *s;
+        it = eolian_property_keys_get(f);
+        if(it == NULL) fprintf(file, "property_keys = [];\n");
+        fprintf(file, "property_keys = [\n");
+        EINA_ITERATOR_FOREACH(it, s) fprintf(file, "\"%s\";\n", s);
+        fprintf(file, "];\n");
+}
+
+/* TODO: eolian_property_values_get ? */
+
 void
 print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
 {
@@ -249,6 +263,7 @@ print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
         print_function_c_only(f, file);
         print_function_constructor(f, cl, file);
         print_function_parameters(f, file);
+        print_property_keys(f, file);
         fprintf(file, "}\n");
 }
 
