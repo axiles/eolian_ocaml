@@ -1,7 +1,10 @@
 #include "common.h"
 
 extern void
-print_function(const Eolian_Function* f, const Eolian_Class *cl, FILE *file);
+print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file);
+
+extern void
+print_implement(const Eolian_Implement *impl, FILE *file);
 
 static void
 print_ml_variant_Eolian_Class_Type(Eolian_Class_Type x, FILE *file)
@@ -125,6 +128,20 @@ print_class_functions_all(const Eolian_Class *cl, FILE *file)
         print_class_functions(cl, EOLIAN_METHOD, "method", file);
 }
 
+static void
+print_class_implements(const Eolian_Class *cl, FILE *file)
+{
+        Eina_Iterator *it;
+        Eolian_Implement *impl;
+        it = eolian_class_implements_get(cl);
+        fprintf(file, "implements = [\n");
+        EINA_ITERATOR_FOREACH(it, impl) {
+                print_implement(impl, file);
+                fprintf(file, ";\n");
+        }
+        fprintf(file, "];\n");
+}
+
 void
 print_class(const Eolian_Class *cl, FILE *file)
 {
@@ -139,6 +156,7 @@ print_class(const Eolian_Class *cl, FILE *file)
         print_class_data_type(cl, file);
         print_class_inherits(cl, file);
         print_class_functions_all(cl, file);
+        print_class_implements(cl, file);
         fprintf(file, "}\n");
 }
 

@@ -103,6 +103,12 @@ module Function_parameter = struct
   }
 end
 
+module Implement = struct
+  type t = {
+    full_name : string;
+  }
+end
+
 module Function = struct
   type t = {
     ty : Function_type.t;
@@ -184,6 +190,7 @@ module Class = struct
     functions_prop_get : Function.t list;
     functions_prop_set : Function.t list;
     functions_method : Function.t list;
+    implements : Implement.t list;
   }
 end
 
