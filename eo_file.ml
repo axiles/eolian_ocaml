@@ -46,6 +46,12 @@ module Type_type = struct
     | Class
 end
  
+module Expression = struct
+  type t = {
+      literal : string;
+  }
+end
+
 module Struct_type_field = struct
   type 'a t = {
     name : string option;
@@ -58,6 +64,7 @@ module Enum_type_field = struct
   type t = {
     name : string;
     description : string option;
+    value : Expression.t
   }
 end
 
