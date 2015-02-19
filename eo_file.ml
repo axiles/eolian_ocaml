@@ -94,6 +94,12 @@ module Function_parameter = struct
   type t = {
     direction : Parameter_dir.t;
     ty : Type.t;
+    default_value : Expression.t option;
+    name : string;
+    description : string option;
+    const_attribute_get : bool;
+    const_attribute_set : bool;
+    nonull : bool;
   }
 end
 
