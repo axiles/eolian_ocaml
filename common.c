@@ -1,6 +1,22 @@
 #include "common.h"
 
 void
+print_quoted_string(Eina_Stringshare *s, FILE *file)
+{
+        int i, n;
+        i = 0;
+        n = eina_stringshare_strlen(s);
+        fprintf(file, "\"");
+        while(i < n) {
+                if(s[i] == '\"') fprintf(file, "\\\"");
+//                else if(s[i] == '\n') fprintf(file, "\\n");
+                else fprintf(file, "%c", s[i]);
+                i++;
+        }
+        fprintf(file, "\"");
+}
+
+void
 print_ml_variant_Eolian_Object_Scope(Eolian_Object_Scope x, FILE *file)
 {
         fprintf(file, "Object_scope.");
@@ -21,7 +37,10 @@ void
 print_string_option(Eina_Stringshare *s, FILE *file)
 {
       if(s == NULL) fprintf(file, "None");
-      else fprintf(file, "Some \"%s\"", s);
+      else {
+              fprintf(file, "Some ");
+              print_quoted_string(s, file);
+      }
 }
 
 void
@@ -31,7 +50,9 @@ print_var_string(Eina_Stringshare *var, Eina_Stringshare *value, FILE *file)
                 fprintf(stderr, "%s should not be NULL\n", var);
                 exit(1);
         }
-        fprintf(file, "%s = \"%s\";\n", var, value);
+        fprintf(file, "%s = ", var);
+        print_quoted_string(value, file);
+        fprintf(file, ";\n");
 }
  
 void

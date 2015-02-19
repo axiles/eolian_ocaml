@@ -53,10 +53,32 @@ print_type_type(const Eolian_Type *ty, FILE *file)
 }
 
 void
+print_type(const Eolian_Type *ty, FILE *file);
+
+static void
+print_type_subtypes(const Eolian_Type *ty, FILE *file)
+{
+        Eina_Iterator *it;
+        Eolian_Type *ty1;
+        if(eolian_type_type_get(ty) != EOLIAN_TYPE_COMPLEX) {
+                fprintf(file, "subtypes = [];\n");
+                return;
+        }
+        it = eolian_type_subtypes_get(ty);
+        fprintf(file, "subtypes = [\n");
+        EINA_ITERATOR_FOREACH(it, ty1) {
+                print_type(ty1, file);
+                fprintf(file, ";\n");
+        }
+        fprintf(file, "];\n");
+}
+
+void
 print_type(const Eolian_Type *ty, FILE *file)
 {
         fprintf(file, "{\n");
         print_type_type(ty, file);
+        print_type_subtypes(ty, file);
         fprintf(file, "}");
 }
 

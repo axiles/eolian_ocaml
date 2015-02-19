@@ -29,7 +29,7 @@ int main(int argc, char** argv)
         eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/eina");
         eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/evas");
         eolian_directory_scan("/home/alexis/src/efl-1.13/elementary-1.13.0/src/lib");
-        parse_class("elm_button.eo", stdout);
+        parse_class("elm_list.eo", stdout);
         fflush(stdout);
         eolian_shutdown();
         return 0;

@@ -49,6 +49,7 @@ end
 module Type = struct
   type t = {
     ty : Type_type.t;
+    subtypes : t list;
   }
 end
 
