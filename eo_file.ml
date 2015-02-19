@@ -75,6 +75,9 @@ module Type = struct
     struct_fields : t Struct_type_field.t list;
     enum_fields : Enum_type_field.t list;
     enum_legacy_prefix : string option;
+    description : string option;
+    file : string option;
+    base_type : t option;
   }
 end
 

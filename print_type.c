@@ -126,6 +126,48 @@ print_type_enum_legacy_prefix(const Eolian_Type *ty, FILE *file)
                 eolian_type_enum_legacy_prefix_get(ty), file);
 }
 
+static void
+print_type_description(const Eolian_Type *ty, FILE *file)
+{
+        Eolian_Type_Type t;
+        t = eolian_type_type_get(ty);
+        if(t == EOLIAN_TYPE_POINTER || t == EOLIAN_TYPE_VOID) {
+                print_var_string_opt("description", NULL, file);
+                return;
+        }
+        print_var_string_opt("description", eolian_type_description_get(ty),
+                file);
+}
+
+static void
+print_type_file(const Eolian_Type *ty, FILE *file)
+{
+        Eolian_Type_Type t;
+        t = eolian_type_type_get(ty);
+        if(t == EOLIAN_TYPE_POINTER || t == EOLIAN_TYPE_VOID) {
+                print_var_string_opt("file", NULL, file);
+                return;
+        }
+        print_var_string_opt("file", eolian_type_file_get(ty), file);
+}
+
+static void
+print_type_base_type(const Eolian_Type *ty, FILE *file)
+{
+        const Eolian_Type *base_ty;
+        Eolian_Type_Type t;
+        t = eolian_type_type_get(ty);
+        if(t != EOLIAN_TYPE_POINTER && t != EOLIAN_TYPE_ALIAS) base_ty = NULL;
+        else base_ty = eolian_type_base_type_get(ty);
+        fprintf(file, "base_type = ");
+        if(base_ty == NULL) fprintf(file, "None");
+        else {
+                fprintf(file, "Some ");
+                print_type(base_ty, file);
+        }
+        fprintf(file, ";\n");
+}
+
 void
 print_type(const Eolian_Type *ty, FILE *file)
 {
@@ -135,6 +177,9 @@ print_type(const Eolian_Type *ty, FILE *file)
         print_type_struct_fields(ty, file);
         print_type_enum_fields(ty, file);
         print_type_enum_legacy_prefix(ty, file);
+        print_type_description(ty, file);
+        print_type_file(ty, file);
+        print_type_base_type(ty, file);
         fprintf(file, "}");
 }
 
