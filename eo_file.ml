@@ -78,6 +78,15 @@ module Type = struct
     description : string option;
     file : string option;
     base_type : t option;
+    own : bool;
+    const : bool;
+    extern : bool;
+    c_type_named : string;
+    c_type : string;
+    name : string option;
+    full_name : string option;
+    namespaces : string list;
+    free_func : string option;
   }
 end
 

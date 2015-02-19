@@ -168,6 +168,90 @@ print_type_base_type(const Eolian_Type *ty, FILE *file)
         fprintf(file, ";\n");
 }
 
+/* TODO: eolian_type_class_get ? */
+
+static void
+print_type_own(const Eolian_Type *ty, FILE *file)
+{
+        print_var_bool("own", eolian_type_is_own(ty), file);
+}
+
+static void
+print_type_const(const Eolian_Type *ty, FILE *file)
+{
+        print_var_bool("const", eolian_type_is_const(ty), file);
+}
+
+static void
+print_type_extern(const Eolian_Type *ty, FILE *file)
+{
+        print_var_bool("extern", eolian_type_is_extern(ty), file);
+}
+
+static void
+print_type_c_type_named(const Eolian_Type *ty, FILE *file)
+{
+        Eina_Stringshare *s;
+        s = eolian_type_c_type_named_get(ty, "@");
+        print_var_string("c_type_named", s, file);
+        eina_stringshare_del(s);
+}
+
+static void
+print_type_c_type(const Eolian_Type *ty, FILE *file)
+{
+        Eina_Stringshare *s;
+        s = eolian_type_c_type_get(ty);
+        print_var_string("c_type", s, file);
+        eina_stringshare_del(s);
+}
+
+static void
+print_type_name(const Eolian_Type *ty, FILE *file)
+{
+        Eolian_Type_Type t;
+        Eina_Stringshare *s;
+        t = eolian_type_type_get(ty);
+        if(t == EOLIAN_TYPE_POINTER || t == EOLIAN_TYPE_VOID) s = NULL;
+        else s = eolian_type_name_get(ty);
+        print_var_string_opt("name", s, file);
+}
+
+static void
+print_type_full_name(const Eolian_Type *ty, FILE *file)
+{
+        Eolian_Type_Type t;
+        Eina_Stringshare *s;
+        t = eolian_type_type_get(ty);
+        if(t == EOLIAN_TYPE_POINTER || t == EOLIAN_TYPE_VOID) s = NULL;
+        else s = eolian_type_full_name_get(ty);
+        print_var_string_opt("full_name", s, file);
+}
+
+static void
+print_type_namespaces(const Eolian_Type *ty, FILE *file)
+{
+        Eolian_Type_Type t;
+        Eina_Iterator *it;
+        Eina_Stringshare *s;
+        t = eolian_type_type_get(ty);
+        if(t == EOLIAN_TYPE_POINTER || t == EOLIAN_TYPE_VOID) it = NULL;
+        else it = eolian_type_namespaces_get(ty);
+        if(it == NULL) {
+                fprintf(file, "namespaces = [];\n");
+                return;
+        }
+        fprintf(file, "namespaces = [\n");
+        EINA_ITERATOR_FOREACH(it, s) fprintf(file, "%s;", s);
+        fprintf(file, "];\n");
+}
+
+static void
+print_type_free_func(const Eolian_Type *ty, FILE *file)
+{
+        print_var_string_opt("free_func", eolian_type_free_func_get(ty), file);
+}
+
 void
 print_type(const Eolian_Type *ty, FILE *file)
 {
@@ -180,6 +264,15 @@ print_type(const Eolian_Type *ty, FILE *file)
         print_type_description(ty, file);
         print_type_file(ty, file);
         print_type_base_type(ty, file);
+        print_type_own(ty, file);
+        print_type_const(ty, file);
+        print_type_extern(ty,file);
+        print_type_c_type_named(ty, file);
+        print_type_c_type(ty, file);
+        print_type_name(ty, file);
+        print_type_full_name(ty, file);
+        print_type_namespaces(ty, file);
+        print_type_free_func(ty, file);
         fprintf(file, "}");
 }
 
