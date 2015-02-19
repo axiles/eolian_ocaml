@@ -54,11 +54,18 @@ module Struct_type_field = struct
   }
 end
 
+module Enum_type_field = struct
+  type t = {
+    name : string;
+  }
+end
+
 module Type = struct
   type t = {
     ty : Type_type.t;
     subtypes : t list;
     struct_fields : t Struct_type_field.t list;
+    enum_fields : Enum_type_field.t list;
   }
 end
 
