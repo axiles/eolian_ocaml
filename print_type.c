@@ -1,5 +1,8 @@
 #include "common.h"
 
+extern void
+print_struct_type_field(const Eolian_Struct_Type_Field *field, FILE *file);
+
 static void
 print_ml_variant_Eolian_Type_Type(Eolian_Type_Type x, FILE *file)
 {
@@ -73,12 +76,31 @@ print_type_subtypes(const Eolian_Type *ty, FILE *file)
         fprintf(file, "];\n");
 }
 
+static void
+print_type_struct_fields(const Eolian_Type *ty, FILE *file)
+{
+        Eina_Iterator *it;
+        Eolian_Struct_Type_Field *field;
+        if(eolian_type_type_get(ty) != EOLIAN_TYPE_STRUCT) {
+                fprintf(file, "struct_fields = [];\n");
+                return;
+        }
+        it = eolian_type_struct_fields_get(ty);
+        fprintf(file, "struct_fields = [");
+        EINA_ITERATOR_FOREACH(it, field) {
+                print_struct_type_field(field, file);
+                fprintf(file, ";\n");
+        }
+        fprintf(file, "];\n");
+}
+
 void
 print_type(const Eolian_Type *ty, FILE *file)
 {
         fprintf(file, "{\n");
         print_type_type(ty, file);
         print_type_subtypes(ty, file);
+        print_type_struct_fields(ty, file);
         fprintf(file, "}");
 }
 
