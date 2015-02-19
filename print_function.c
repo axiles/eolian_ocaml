@@ -320,6 +320,63 @@ print_function_return_default_value_all(const Eolian_Function *f, FILE *file)
                 EOLIAN_METHOD, file);
 }
 
+static void
+print_return_comment(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE                  *file)
+{
+        print_var_string_opt(name, eolian_function_return_comment_get(f, ty),
+                file);
+}
+
+static void
+print_function_return_comment_all(const Eolian_Function *f, FILE *file)
+{
+        print_return_comment(f, "return_comment_unresolved", EOLIAN_UNRESOLVED,
+                file);
+        print_return_comment(f, "return_comment_property", EOLIAN_PROPERTY,
+                file);
+        print_return_comment(f, "return_comment_prop_get", EOLIAN_PROP_GET,
+                file);
+        print_return_comment(f, "return_comment_prop_set", EOLIAN_PROP_SET,
+                file);
+        print_return_comment(f, "return_comment_method", EOLIAN_METHOD, file);
+}
+
+static void
+print_warn_unused(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE *file)
+{
+        print_var_bool(name, eolian_function_return_is_warn_unused(f, ty),
+                file);
+}
+
+static void
+print_function_return_warn_unused_all(const Eolian_Function *f, FILE *file)
+{
+        print_warn_unused(f, "return_warn_unused_unresolved", EOLIAN_UNRESOLVED,
+                file);
+        print_warn_unused(f, "return_warn_unused_property", EOLIAN_PROPERTY,
+                file);
+        print_warn_unused(f, "return_warn_unused_prop_get", EOLIAN_PROP_GET,
+                file);
+        print_warn_unused(f, "return_warn_unused_prop_set", EOLIAN_PROP_SET,
+                file);
+        print_warn_unused(f, "return_warn_unused_method", EOLIAN_METHOD, file);
+}
+
+static void
+print_function_object_const(const Eolian_Function *f, FILE *file)
+{
+        print_var_bool("object_const", eolian_function_object_is_const(f),
+                file);
+}
+
 void
 print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
 {
@@ -341,6 +398,9 @@ print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
         print_property_keys(f, file);
         print_function_return_type_all(f, file);
         print_function_return_default_value_all(f, file);
+        print_function_return_comment_all(f, file);
+        print_function_return_warn_unused_all(f, file);
+        print_function_object_const(f, file);
         fprintf(file, "}\n");
 }
 

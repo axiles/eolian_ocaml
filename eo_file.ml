@@ -154,6 +154,17 @@ module Function = struct
     return_default_value_prop_get : Expression.t option;
     return_default_value_prop_set : Expression.t option;
     return_default_value_method : Expression.t option;
+    return_comment_unresolved : string option;
+    return_comment_property : string option;
+    return_comment_prop_get : string option;
+    return_comment_prop_set : string option;
+    return_comment_method : string option;
+    return_warn_unused_unresolved : bool;
+    return_warn_unused_property : bool;
+    return_warn_unused_prop_get : bool;
+    return_warn_unused_prop_set : bool;
+    return_warn_unused_method : bool;
+    object_const : bool;
   }
 end
 
