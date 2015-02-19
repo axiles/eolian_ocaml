@@ -3,6 +3,12 @@
 extern void
 print_param(const Eolian_Function_Parameter *param, FILE *file);
 
+extern void
+print_type(const Eolian_Type *ty, FILE *file);
+
+extern void
+print_expression(const Eolian_Expression *expr, FILE *file);
+
 static void
 print_ml_variant_Eolian_Function_Type(Eolian_Function_Type x, FILE *file)
 {
@@ -237,13 +243,82 @@ print_property_keys(const Eolian_Function *f, FILE *file)
         Eina_Iterator *it;
         Eina_Stringshare *s;
         it = eolian_property_keys_get(f);
-        if(it == NULL) fprintf(file, "property_keys = [];\n");
+        if(it == NULL) {
+                fprintf(file, "property_keys = [];\n");
+                return;
+        }
         fprintf(file, "property_keys = [\n");
         EINA_ITERATOR_FOREACH(it, s) fprintf(file, "\"%s\";\n", s);
         fprintf(file, "];\n");
 }
 
 /* TODO: eolian_property_values_get ? */
+
+static void
+print_function_return_type(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE                  *file)
+{
+        const Eolian_Type *t;
+        t = eolian_function_return_type_get(f, ty);
+        fprintf(file, "%s = ", name);
+        if(t == NULL) fprintf(file, "None");
+        else {
+                fprintf(file, "Some ");
+                print_type(eolian_function_return_type_get(f, ty), file);
+        }
+        fprintf(file, ";\n");
+}
+
+static void
+print_function_return_type_all(const Eolian_Function *f, FILE *file)
+{
+        print_function_return_type(f, "return_type_unresolved",
+                EOLIAN_UNRESOLVED, file);
+        print_function_return_type(f, "return_type_property", EOLIAN_PROPERTY,
+                file);
+        print_function_return_type(f, "return_type_prop_get", EOLIAN_PROP_GET,
+                file);
+        print_function_return_type(f, "return_type_prop_set", EOLIAN_PROP_SET,
+                file);
+        print_function_return_type(f, "return_type_method", EOLIAN_METHOD,
+                file);
+}
+
+static void
+print_return_default_value(
+        const Eolian_Function *f,
+        Eina_Stringshare      *name,
+        Eolian_Function_Type   ty,
+        FILE                  *file)
+{
+        const Eolian_Expression *expr;
+        expr = eolian_function_return_default_value_get(f, ty);
+        fprintf(file, "%s = ", name);
+        if(expr == NULL) fprintf(file, "None");
+        else {
+                fprintf(file, "Some");
+                print_expression(expr, file);
+        }
+        fprintf(file, ";\n");
+}
+
+static void
+print_function_return_default_value_all(const Eolian_Function *f, FILE *file)
+{
+        print_return_default_value(f, "return_default_value_unresolved",
+                EOLIAN_UNRESOLVED, file);
+        print_return_default_value(f, "return_default_value_property",
+                EOLIAN_PROPERTY, file);
+        print_return_default_value(f, "return_default_value_prop_get",
+                EOLIAN_PROP_GET, file);
+        print_return_default_value(f, "return_default_value_prop_set",
+                EOLIAN_PROP_SET, file);
+        print_return_default_value(f, "return_default_value_method",
+                EOLIAN_METHOD, file);
+}
 
 void
 print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
@@ -264,6 +339,8 @@ print_function(const Eolian_Function *f, const Eolian_Class *cl, FILE *file)
         print_function_constructor(f, cl, file);
         print_function_parameters(f, file);
         print_property_keys(f, file);
+        print_function_return_type_all(f, file);
+        print_function_return_default_value_all(f, file);
         fprintf(file, "}\n");
 }
 

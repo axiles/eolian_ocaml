@@ -144,6 +144,16 @@ module Function = struct
     constructor :bool;
     parameters : Function_parameter.t list;
     property_keys : string list;
+    return_type_unresolved : Type.t option;
+    return_type_property : Type.t option;
+    return_type_prop_get : Type.t option;
+    return_type_prop_set : Type.t option;
+    return_type_method : Type.t option;
+    return_default_value_unresolved : Expression.t option;
+    return_default_value_property : Expression.t option;
+    return_default_value_prop_get : Expression.t option;
+    return_default_value_prop_set : Expression.t option;
+    return_default_value_method : Expression.t option;
   }
 end
 
