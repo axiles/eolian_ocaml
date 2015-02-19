@@ -74,6 +74,7 @@ module Type = struct
     subtypes : t list;
     struct_fields : t Struct_type_field.t list;
     enum_fields : Enum_type_field.t list;
+    enum_legacy_prefix : string option;
   }
 end
 

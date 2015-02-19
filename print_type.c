@@ -115,6 +115,17 @@ print_type_enum_fields(const Eolian_Type *ty, FILE *file)
         fprintf(file, "];\n");
 }
 
+static void
+print_type_enum_legacy_prefix(const Eolian_Type *ty, FILE *file)
+{
+        if(eolian_type_type_get(ty) != EOLIAN_TYPE_ENUM) {
+                fprintf(file, "enum_legacy_prefix = None;\n");
+                return;
+        }
+        print_var_string_opt("enum_legacy_prefix",
+                eolian_type_enum_legacy_prefix_get(ty), file);
+}
+
 void
 print_type(const Eolian_Type *ty, FILE *file)
 {
@@ -123,6 +134,7 @@ print_type(const Eolian_Type *ty, FILE *file)
         print_type_subtypes(ty, file);
         print_type_struct_fields(ty, file);
         print_type_enum_fields(ty, file);
+        print_type_enum_legacy_prefix(ty, file);
         fprintf(file, "}");
 }
 
