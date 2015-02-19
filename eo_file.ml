@@ -57,6 +57,7 @@ end
 module Enum_type_field = struct
   type t = {
     name : string;
+    description : string option;
   }
 end
 
