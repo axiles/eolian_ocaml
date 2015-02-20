@@ -183,6 +183,8 @@ end
 module Constructor = struct
     type t = {
       full_name : string;
+      func : Function.t option;
+      optional : bool;
     }
 end
 
