@@ -191,6 +191,10 @@ end
 module Event = struct
     type t = {
       name : string option;
+      ty : Type.t option;
+      description : string option;
+      scope : Object_scope.t;
+      c_name : string;
     }
 end
 
