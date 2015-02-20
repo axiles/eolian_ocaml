@@ -143,7 +143,7 @@ module Function = struct
     c_only : bool;
     constructor :bool;
     parameters : Function_parameter.t list;
-    property_keys : string list;
+    property_keys : Function_parameter.t list;
     return_type_unresolved : Type.t option;
     return_type_property : Type.t option;
     return_type_prop_get : Type.t option;
@@ -206,7 +206,7 @@ module Class = struct
     ty : Class_type.t;
     description : string option;
     legacy_prefix : string option;
-    eo_prefix : string;
+    eo_prefix : string option;
     data_type : string option;
     inherits : string list;
     functions_unresolved : Function.t list;

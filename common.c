@@ -10,6 +10,7 @@ print_quoted_string(Eina_Stringshare *s, FILE *file)
         while(i < n) {
                 if(s[i] == '\"') fprintf(file, "\\\"");
 //                else if(s[i] == '\n') fprintf(file, "\\n");
+                else if(s[i] == '\\') fprintf(file, "\\\\");
                 else fprintf(file, "%c", s[i]);
                 i++;
         }

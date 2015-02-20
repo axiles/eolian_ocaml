@@ -84,7 +84,7 @@ print_class_legacy_prefix(const Eolian_Class *cl, FILE *file)
 static void
 print_class_eo_prefix(const Eolian_Class *cl, FILE *file)
 {
-        print_var_string("eo_prefix", eolian_class_eo_prefix_get(cl),
+        print_var_string_opt("eo_prefix", eolian_class_eo_prefix_get(cl),
                 file);
 }
 
@@ -222,6 +222,6 @@ print_class(const Eolian_Class *cl, FILE *file)
         print_class_ctor_enable(cl, file);
         print_class_dtor_enable(cl, file);
         print_class_c_get_function_name(cl, file);
-        fprintf(file, "}\n");
+        fprintf(file, "}");
 }
 

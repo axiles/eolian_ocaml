@@ -243,14 +243,17 @@ static void
 print_property_keys(const Eolian_Function *f, FILE *file)
 {
         Eina_Iterator *it;
-        Eina_Stringshare *s;
+        Eolian_Function_Parameter *param;
         it = eolian_property_keys_get(f);
         if(it == NULL) {
                 fprintf(file, "property_keys = [];\n");
                 return;
         }
         fprintf(file, "property_keys = [\n");
-        EINA_ITERATOR_FOREACH(it, s) fprintf(file, "\"%s\";\n", s);
+        EINA_ITERATOR_FOREACH(it, param) {
+                print_param(param, file);
+                fprintf(file, ";\n");
+        }
         fprintf(file, "];\n");
 }
 

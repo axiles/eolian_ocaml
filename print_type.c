@@ -242,7 +242,7 @@ print_type_namespaces(const Eolian_Type *ty, FILE *file)
                 return;
         }
         fprintf(file, "namespaces = [\n");
-        EINA_ITERATOR_FOREACH(it, s) fprintf(file, "\"%s;\"", s);
+        EINA_ITERATOR_FOREACH(it, s) fprintf(file, "\"%s\";", s);
         fprintf(file, "];\n");
 }
 

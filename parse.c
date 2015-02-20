@@ -3,33 +3,36 @@
 extern void
 print_class(const Eolian_Class *cl, FILE* file);
 
-int parse_class(const char *filename, FILE *file)
+static void
+print_all_classes(FILE *file)
 {
-        const Eolian_Class *cl;
-        if(!eolian_eo_file_parse(filename)) {
-                fprintf(stderr, "Could not parse file %s\n", filename);
-                exit(1);
+        Eina_Iterator *it;
+        Eolian_Class *cl;
+        it = eolian_all_classes_get();
+        fprintf(file, "[");
+        if(it != NULL) fprintf(file, "\n");
+        EINA_ITERATOR_FOREACH(it, cl) {
+                fprintf(file, "(* %s *)", eolian_class_name_get(cl));
+                print_class(cl, file);
+                fprintf(file, ";\n");
         }
-        if((cl = eolian_class_get_by_file(filename)) == NULL) {
-                fprintf(stderr, "Could not find class in %s\n", filename);
-                exit(1);
-        }
-        print_class(cl, file);
-        return 1;
+        fprintf(file, "]");
 }
- 
-int main(int argc, char** argv)
+
+static void
+parse_all(int argc, char* argv[])
+{
+        int i;
+        for(i = 1; i < argc; i++) eolian_directory_scan(argv[i]);
+        eolian_all_eo_files_parse();
+}
+int main(int argc, char *argv[])
 {
         eolian_init();
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/eo");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/ecore");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/efl");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/eet");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/edje");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/eina");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/efl-1.13.0/src/lib/evas");
-        eolian_directory_scan("/home/alexis/src/efl-1.13/elementary-1.13.0/src/lib");
-        parse_class("elm_list.eo", stdout);
+        parse_all(argc, argv);
+        fprintf(stdout, "let world = ");
+        print_all_classes(stdout);
+        fprintf(stdout, "\n");
         fflush(stdout);
         eolian_shutdown();
         return 0;
