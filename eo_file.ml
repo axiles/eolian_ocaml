@@ -103,12 +103,6 @@ module Function_parameter = struct
   }
 end
 
-module Implement = struct
-  type t = {
-    full_name : string;
-  }
-end
-
 module Function = struct
   type t = {
     ty : Function_type.t;
@@ -171,6 +165,18 @@ module Function = struct
     return_warn_unused_prop_set : bool;
     return_warn_unused_method : bool;
     object_const : bool;
+  }
+end
+
+module Implement = struct
+  type t = {
+    full_name : string;
+    func : (Function_type.t * Function.t) option;
+    auto : bool;
+    empty : bool;
+    virt : bool;
+    prop_get : bool;
+    prop_set : bool;
   }
 end
 

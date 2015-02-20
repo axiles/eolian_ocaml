@@ -9,7 +9,7 @@ print_type(const Eolian_Type *ty, FILE *file);
 extern void
 print_expression(const Eolian_Expression *expr, FILE *file);
 
-static void
+void
 print_ml_variant_Eolian_Function_Type(Eolian_Function_Type x, FILE *file)
 {
         fprintf(file, "Function_type.");
@@ -219,8 +219,10 @@ print_function_constructor(
         const Eolian_Class *cl,
         FILE *file)
 {
-        print_var_bool("constructor", eolian_function_is_constructor(f, cl),
-                file);
+        Eina_Bool b;
+        if(cl == NULL) b = EINA_FALSE;
+        else b = eolian_function_is_constructor(f, cl);
+        print_var_bool("constructor", b, file);
 }
 
 static void
