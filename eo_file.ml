@@ -188,6 +188,12 @@ module Constructor = struct
     }
 end
 
+module Event = struct
+    type t = {
+      name : string option;
+    }
+end
+
 module Class = struct
   type t = {
     full_name : string;
@@ -206,6 +212,7 @@ module Class = struct
     functions_method : Function.t list;
     implements : Implement.t list;
     constructors : Constructor.t list;
+    events : Event.t list;
   }
 end
 

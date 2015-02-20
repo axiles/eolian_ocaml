@@ -9,6 +9,9 @@ print_implement(const Eolian_Implement *impl, FILE *file);
 extern void
 print_constructor(const Eolian_Constructor *ctor, FILE *file);
 
+extern void
+print_event(const Eolian_Event *event, FILE *file);
+
 static void
 print_ml_variant_Eolian_Class_Type(Eolian_Class_Type x, FILE *file)
 {
@@ -163,6 +166,21 @@ print_class_constructors(const Eolian_Class *cl, FILE *file)
         fprintf(file, "];\n");
 }
        
+static void
+print_class_events(const Eolian_Class *cl, FILE *file)
+{
+        Eina_Iterator *it;
+        Eolian_Event *event;
+        it = eolian_class_events_get(cl);
+        fprintf(file, "events = [");
+        if(it != NULL) fprintf(file, "\n");
+        EINA_ITERATOR_FOREACH(it, event) {
+                print_event(event, file);
+                fprintf(file, ";\n");
+        }
+        fprintf(file, "];\n");
+}
+
 void
 print_class(const Eolian_Class *cl, FILE *file)
 {
@@ -179,6 +197,7 @@ print_class(const Eolian_Class *cl, FILE *file)
         print_class_functions_all(cl, file);
         print_class_implements(cl, file);
         print_class_constructors(cl, file);
+        print_class_events(cl, file);
         fprintf(file, "}\n");
 }
 
