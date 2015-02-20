@@ -181,6 +181,27 @@ print_class_events(const Eolian_Class *cl, FILE *file)
         fprintf(file, "];\n");
 }
 
+static void
+print_class_ctor_enable(const Eolian_Class *cl, FILE *file)
+{
+        print_var_bool("ctor_enable", eolian_class_ctor_enable_get(cl), file);
+}
+
+static void
+print_class_dtor_enable(const Eolian_Class *cl, FILE *file)
+{
+        print_var_bool("dtor_enable", eolian_class_dtor_enable_get(cl), file);
+}
+
+static void
+print_class_c_get_function_name(const Eolian_Class *cl, FILE *file)
+{
+        Eina_Stringshare *s;
+        s = eolian_class_c_get_function_name_get(cl);
+        print_var_string_opt("c_get_function_name", s, file);
+        eina_stringshare_del(s);
+}
+
 void
 print_class(const Eolian_Class *cl, FILE *file)
 {
@@ -198,6 +219,9 @@ print_class(const Eolian_Class *cl, FILE *file)
         print_class_implements(cl, file);
         print_class_constructors(cl, file);
         print_class_events(cl, file);
+        print_class_ctor_enable(cl, file);
+        print_class_dtor_enable(cl, file);
+        print_class_c_get_function_name(cl, file);
         fprintf(file, "}\n");
 }
 

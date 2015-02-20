@@ -217,6 +217,9 @@ module Class = struct
     implements : Implement.t list;
     constructors : Constructor.t list;
     events : Event.t list;
+    ctor_enable : bool;
+    dtor_enable : bool;
+    c_get_function_name : string option;
   }
 end
 
