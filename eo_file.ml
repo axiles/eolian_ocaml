@@ -180,6 +180,12 @@ module Implement = struct
   }
 end
 
+module Constructor = struct
+    type t = {
+      full_name : string;
+    }
+end
+
 module Class = struct
   type t = {
     full_name : string;
@@ -197,6 +203,7 @@ module Class = struct
     functions_prop_set : Function.t list;
     functions_method : Function.t list;
     implements : Implement.t list;
+    constructors : Constructor.t list;
   }
 end
 
